@@ -1,0 +1,31 @@
+version: "3"
+services: 
+  
+  dbservice_postgre:
+    image: postgres
+    environment: 
+      # - MYSQL_USERNAME=root
+      - POSTGRES_PASSWORD=test
+    volumes:
+      - ./data:/var/lib/mysql
+    ports:
+      - 3308:5432
+    networks:
+      - bootcomposeapp
+
+
+  product-service:
+    build: ./ProductService/
+    depends_on: 
+      - dbservice_postgre
+    environment:
+      - spring.datasource.url=jdbc:postgresql://localhost:5432/ecommerce_app?createDatabaseIfNotExist=true
+      - spring.datasource.username=postgres
+      - spring.datasource.password=test
+    ports:
+      - 8086:8082
+    networks:
+      - bootcomposeapp
+
+networks:
+  bootcomposeapp:
