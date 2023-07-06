@@ -15,11 +15,11 @@ services:
 
 
   product-service:
-    build: ./ProductService/
+    build: ./
     depends_on: 
       - dbservice_postgre
     environment:
-      - spring.datasource.url=jdbc:postgresql://localhost:5432/ecommerce_app?createDatabaseIfNotExist=true
+      - spring.datasource.url=jdbc:postgresql://dbservice_postgre:5432/ecommerce_app?createDatabaseIfNotExist=true
       - spring.datasource.username=postgres
       - spring.datasource.password=test
     ports:
